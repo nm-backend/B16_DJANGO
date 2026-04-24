@@ -1,15 +1,19 @@
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from rest_framework.generics import (
-    CreateAPIView, ListCreateAPIView,
-    ListAPIView, GenericAPIView,
-    DestroyAPIView, RetrieveDestroyAPIView,
-    RetrieveAPIView, RetrieveUpdateAPIView,
-    UpdateAPIView, RetrieveUpdateDestroyAPIView
+    CreateAPIView,
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
 )
+from rest_framework.response import Response
 
-from .serializers import MovieModelSerializer, MovieSerializer, CategoryModelSerializer, GenreModelSerializer
-from catalog.models import Movie, Genre, Category
+from catalog.models import Category, Genre, Movie
+
+from .serializers import (
+    CategoryModelSerializer,
+    GenreModelSerializer,
+    MovieModelSerializer,
+    MovieSerializer,
+)
 
 
 class MovieListCreateAPIView(ListCreateAPIView):

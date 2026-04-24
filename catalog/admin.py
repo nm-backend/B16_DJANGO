@@ -1,9 +1,7 @@
 from django.contrib import admin
 
-from django.utils.safestring import mark_safe
-
 # Register your models here.
-from .models import Category,Movie,Genre
+from .models import Category, Genre, Movie
 
 
 class MovieInline(admin.TabularInline):

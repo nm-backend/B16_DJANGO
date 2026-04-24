@@ -1,12 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView, DetailView, CreateView, UpdateView, DeleteView, FormView
-from django.core.paginator import Paginator
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DetailView, TemplateView, UpdateView
 
-from datetime import datetime
-from .forms import CategoryForm, MovieForm, GenreForm
+from .forms import CategoryForm, GenreForm, MovieForm
 from .models import Category, Genre, Movie
 
 
@@ -73,10 +72,7 @@ class MovieCreateView(CreateView):
         context["genres"] = Genre.objects.all()
         # context['categories'] = Category.objects.all()
         return context
-    
 
-from django.views.generic import UpdateView 
-from django.urls import reverse_lazy
 
 class MovieUpdateView(UpdateView): 
     model = Movie
@@ -169,22 +165,22 @@ def add_genre(request):
 
 def register(request):
     if request.method == "POST":
-        username = request.POST.get("username")
+        email = request.POST.get("email")
         password = request.POST.get("password")
         confirm_password = request.POST.get("confirm_password")
 
         if password != confirm_password:
-            return render(request, "register.html", {
+            return render(request, "auth/register.html", {
                 "error": "Пароли не совпадают"
             })
 
-        if User.objects.filter(username=username).exists():
+        if User.objects.filter(email=email).exists():
             return render(request, "auth/register.html", {
                 "error": "Такой пользователь уже есть"
             })
 
         User.objects.create_user(
-            username=username,
+            email=email,
             password=password
         )
 
@@ -195,10 +191,10 @@ def register(request):
 
 def login_view(request):
     if request.method == "POST":
-        username = request.POST.get("username")
+        email = request.POST.get("email")
         password = request.POST.get("password")
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, email=email, password=password)
 
         if user is not None:
             login(request, user)

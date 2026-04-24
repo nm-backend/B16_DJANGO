@@ -184,6 +184,7 @@
 
 
 from catalog.models import Movie
+
 # 3. ORM (Object-Relational Mapping)
 
 # ORM = мост между Python-кодом и базой данных.

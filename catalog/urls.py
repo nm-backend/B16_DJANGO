@@ -1,6 +1,7 @@
 from django.urls import path
+
 from . import views
-from .views import category_detail,add_category,add_genre, delete_movie
+from .views import add_category, add_genre, category_detail, delete_movie
 
 urlpatterns = [
     path('main/', views.MainPageView.as_view(), name='main_page'),

@@ -1,8 +1,9 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-from .models import Category,Movie,Genre
+from .models import Category, Genre, Movie
+
 
 class CustomUserRegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)

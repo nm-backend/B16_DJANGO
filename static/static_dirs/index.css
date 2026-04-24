@@ -7,14 +7,131 @@ body {
 
         /* Шапка */
         header {
-            background-color: #222;
+            background: linear-gradient(135deg, #111 0%, #2a2a2a 100%);
             color: #fff;
-            padding: 15px 20px;
+            padding: 22px 24px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
         }
 
         header h1 {
             margin: 0;
-            font-size: 24px;
+            font-size: 30px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .search-form {
+            display: flex;
+            flex: 1 1 320px;
+            max-width: 520px;
+            gap: 10px;
+            min-width: 220px;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            outline: none;
+        }
+
+        .search-form input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-form button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 999px;
+            background-color: #ff6b00;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .search-form button:hover {
+            background-color: #e15800;
+        }
+
+        .header-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .header-actions a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 16px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border: 1px solid transparent;
+        }
+
+        .header-actions a:hover {
+            transform: translateY(-1px);
+            background-color: rgba(255, 255, 255, 0.14);
+        }
+
+        .header-actions a.btn {
+            background-color: #ff6b00;
+        }
+
+        .header-actions a.btn:hover {
+            background-color: #e15800;
+        }
+
+        .header-actions a.btn2 {
+            background-color: #1e90ff;
+        }
+
+        .header-actions a.btn2:hover {
+            background-color: #1877d9;
+        }
+
+        .header-actions a.btn3 {
+            background-color: #7f5cff;
+        }
+
+        .header-actions a.btn3:hover {
+            background-color: #644bdf;
+        }
+
+        .header-actions a.btn4 {
+            background-color: transparent;
+            border-color: rgba(255, 255, 255, 0.32);
+        }
+
+        .header-actions a.btn4:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+
+        @media (max-width: 900px) {
+            header {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .search-form,
+            .header-actions {
+                justify-content: center;
+            }
         }
 
         /* Категории сверху */
@@ -144,9 +261,13 @@ body {
 footer{
     background-color: #222;
     color: #fff;
-    /* min-height: 200px; */
     text-align: center;
-    padding: 100px 0;
+    height: 50px;
+    line-height: 50px;
+    padding: 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 .main_page_class{

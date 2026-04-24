@@ -1,8 +1,7 @@
-from django.urls import path, include
+from django.urls import include, path
 
 # from .views import movies_list, movie_detail, categories_list, category_detail, genres_list, genre_detail
 from . import views
-
 
 urlpatterns = [
     path('', include('api.yasg')),

@@ -7,4 +7,4 @@ class CatalogConfig(AppConfig):
     verbose_name = "Каталог фильмов"
 
     def ready(self):
-        import catalog.signals
+        import catalog.signals  # noqa: F401

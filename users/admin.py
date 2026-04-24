@@ -1,12 +1,12 @@
 from django.contrib import admin
-from django.utils.translation import gettext_lazy as _
-from django.utils.safestring import mark_safe
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import (
     AdminPasswordChangeForm,
     AdminUserCreationForm,
     UserChangeForm,
 )
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 
 from users.models import User
 

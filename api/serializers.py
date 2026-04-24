@@ -1,7 +1,7 @@
-from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 
-from catalog.models import Movie, Category, Genre
+from catalog.models import Category, Genre, Movie
 
 
 class MovieModelSerializer(ModelSerializer):
