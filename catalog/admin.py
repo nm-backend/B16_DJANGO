@@ -1,8 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Category, Genre, Movie
-
+from .models import Category, Genre, Movie, MovieImage
 
 class MovieInline(admin.TabularInline):
     model = Movie
@@ -39,3 +38,6 @@ class MovieAdmin(admin.ModelAdmin):
 class GenreAdmin(admin.ModelAdmin):
     pass
 
+class MovieImageInline(admin.TabularInline):
+    model = Movie
+    extra = 0

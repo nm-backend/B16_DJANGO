@@ -14,6 +14,7 @@ from .serializers import (
     RegisterSerializer,
     RequestOTPSerializer,
     UserProfileSerializer,
+    UserProfileUpdateSerializer,
 )
 from .utils import generate_otp, send_otp_email
 
@@ -68,9 +69,13 @@ def delete_account(request):
 
 # Profile
 class ProfileAPIView(RetrieveUpdateAPIView):
-    serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.method in ['PUT', 'PATCH']:
+            return UserProfileUpdateSerializer
+        return UserProfileSerializer
 
     def get_object(self):
         return self.request.user
@@ -106,17 +111,19 @@ class RequestOTPView(APIView):
         user = User.objects.filter(email=email).first()
 
         if user:
-            # деактивируем старые OTP
+            # деактивируем старые OTP для password reset
             PasswordResetOTP.objects.filter(
                 user=user,
-                is_used=False
+                is_used=False,
+                purpose='password_reset'
             ).update(is_used=True)
 
             otp = generate_otp(4)
 
             PasswordResetOTP.objects.create(
                 user=user,
-                otp_code=otp
+                otp_code=otp,
+                purpose='password_reset'
             )
 
             # защита от падения при отправке email
@@ -128,6 +135,42 @@ class RequestOTPView(APIView):
         # одинаковый ответ для всех случаев (защита от перебора email)
         return Response(
             {"message": "Если аккаунт существует, OTP отправлен"},
+            status=status.HTTP_200_OK
+        )
+
+
+# Request register OTP
+class RequestRegistrationOTPView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = RequestOTPSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        email = serializer.validated_data['email']
+        user = User.objects.filter(email=email).first()
+
+        if user:
+            PasswordResetOTP.objects.filter(
+                user=user,
+                is_used=False,
+                purpose="register"
+            ).update(is_used=True)
+
+            otp = generate_otp(4)
+            PasswordResetOTP.objects.create(
+                user=user,
+                otp_code=otp,
+                purpose="register"
+            )
+
+            try:
+                send_otp_email(email, otp)
+            except Exception:
+                pass
+
+        return Response(
+            {"message": "Одноразовый пароль будет отправлен на вашу почту"},
             status=status.HTTP_200_OK
         )
 
@@ -159,3 +202,8 @@ class ResetPasswordView(APIView):
             {"message": "Пароль успешно изменён"},
             status=status.HTTP_200_OK
         )
+
+
+RequestRegisterOTPView = RequestRegistrationOTPView
+VerifyRegistrationOTPView = VerifyOTPView
+CompleteRegistrationView = ResetPasswordView

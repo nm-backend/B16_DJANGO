@@ -47,7 +47,14 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = User
         fields = ('email', 'first_name', "last_name", 'phone_number', "bio",
                   "address", "avatar", "date_joined")
-        read_only_fields = ('email',) 
+        read_only_fields = ('email',)
+
+
+# Profile Update
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'phone_number', 'bio', 'address', 'avatar')
 
 
 # Change Password
@@ -97,7 +104,7 @@ class VerifyOTPSerializer(serializers.Serializer):
         if not user:
             raise serializers.ValidationError("Неверный email или OTP")
         otp_obj = PasswordResetOTP.objects.filter(
-            user=user, otp_code=otp, is_used=False
+            user=user, otp_code=otp, is_used=False, purpose='password_reset'
         ).order_by('-created_at').first()
         if not otp_obj:
             raise serializers.ValidationError("Неверный OTP")
@@ -117,7 +124,7 @@ class ResetPasswordSerializer(serializers.Serializer):
         if not user:
             raise serializers.ValidationError("Неверный email или OTP")
         otp_obj = PasswordResetOTP.objects.filter(
-            user=user, otp_code=otp, is_used=False
+            user=user, otp_code=otp, is_used=False, purpose='password_reset'
         ).first()
         if not otp_obj:
             raise serializers.ValidationError("Неверный OTP")
@@ -132,3 +139,4 @@ class ResetPasswordSerializer(serializers.Serializer):
         user.save()
         otp_obj.is_used = True
         otp_obj.save()
+

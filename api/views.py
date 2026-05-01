@@ -12,13 +12,19 @@ from .serializers import (
     CategoryModelSerializer,
     GenreModelSerializer,
     MovieModelSerializer,
-    MovieSerializer,
+    # MovieSerializer,
 )
 
 
 class MovieListCreateAPIView(ListCreateAPIView):
     queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
+    serializer_class = MovieModelSerializer
+    
+    def get_serializer_class(self):
+        print(self.request.method)
+        if self.request.method == "POST":
+            return MovieModelSerializer
+        return MovieModelSerializer
 
 
 # @api_view(["GET", "POST"])
@@ -35,7 +41,7 @@ class MovieListCreateAPIView(ListCreateAPIView):
 #         print(serializer.errors)
 #         return Response(serializer.errors, status=400)
 
-class MoviewRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+class MovieRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieModelSerializer
     
@@ -45,7 +51,7 @@ def movie_detail(request, pk):
     try:
         movie = Movie.objects.get(pk=pk)
     except Movie.DoesNotExist:
-        return Response({"datail": "Not Fount"})
+        return Response({"detail": "Not Found"})
 
     if request.method == "GET":
         serializer = MovieModelSerializer(movie, many=False)
@@ -122,7 +128,7 @@ def genre_detail(request, pk):
     try:
         genre = Genre.objects.get(pk=pk)
     except Genre.DoesNotExist:
-        return Response({"datail": "Not Fount"})
+        return Response({"detail": "Not Found"})
 
     if request.method == "GET":
         serializer = GenreModelSerializer(genre, many=False)

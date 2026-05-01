@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-3wq#wh8p8$-edd-3ou7e7$7!1kl50q4w3u_dxls31x8&d1#hmu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -152,10 +152,11 @@ REST_FRAMEWORK = {
 
 
 # Email settings
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Для разработки - выводит email в консоль
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = 'ufgbzphagvpfrsun'
+EMAIL_HOST_USER = 'ваш-email@gmail.com'  # Вставьте ваш Gmail
+EMAIL_HOST_PASSWORD = 'ваш-app-password'  # Создайте app password в Gmail
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

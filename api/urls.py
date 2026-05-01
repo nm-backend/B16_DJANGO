@@ -9,7 +9,7 @@ urlpatterns = [
     # path("movies/", movies_list),
     path("movies/", views.MovieListCreateAPIView.as_view()),
     # path("movies/<int:pk>/", views.movie_detail),
-    path("movies/<int:pk>/", views.MoviewRetrieveUpdateDestroyAPIView.as_view()),
+    path("movies/<int:pk>/", views.MovieRetrieveUpdateDestroyAPIView.as_view()),
     path("categories/", views.categories_list),
     path("categories/<int:pk>/", views.category_detail),
     path("genres/", views.genres_list),

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
 from django_resized import ResizedImageField
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -31,6 +32,7 @@ class User(AbstractUser):
 class PasswordResetOTP(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reset_otps')
     otp_code = models.CharField(max_length=4)
+    purpose = models.CharField(max_length=20, default='password_reset')  # Добавлено поле purpose
     is_used = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -49,4 +51,4 @@ class PasswordResetOTP(models.Model):
         return timezone.now() > self.expires_at
 
     def __str__(self):
-        return f'{self.user.email} - {self.otp}'
+        return f'{self.user.email} - {self.otp_code}'

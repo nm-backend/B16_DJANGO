@@ -83,7 +83,24 @@ class Movie(models.Model):
     
     def __str__(self):
         return self.name
+
+class MovieImage(models.Model):
+    image = models.ImageField(
+        verbose_name='Картинка',
+        upload_to='movie/images/'
+    )
+    movie = models.ForeignKey(
+        Movie,
+        on_delete=models.CASCADE,
+        related_name='images'
+    )
     
+    class Meta:
+        verbose_name = 'Изображение фильма'
+        verbose_name_plural = 'Изображения фильма'
+    
+    def __str__(self):
+        return f"Изображение для фильма: {self.movie.name}"
 
 class Genre(models.Model):
     name = models.CharField(
